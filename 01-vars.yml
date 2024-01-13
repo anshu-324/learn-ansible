@@ -15,3 +15,14 @@
     - name: print a variable
       ansible.builtin.debug:
         msg: "{{ URL }}"
+# the variable was given in double quotes, good to give variable in double /single quotes. because it will fail in some scenarios if quotes are not provided.
+# in the key:value, if the value is just variable or if the values starts with variable then it will fail.
+
+- name: demo on task level variable
+  hosts: localhost
+  tasks:
+    - name: print a variable
+      ansible.builtin.debug:
+        msg: "{{ URL }}"
+      vars:
+        URL: example.com
