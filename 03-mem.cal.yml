@@ -1,0 +1,10 @@
+- name: print used memory
+  hosts: localhost
+  tasks:
+    - name: get memory
+      ansible.builtin.shell: free | grep Mem | xargs
+      register: free
+
+    - name: set a fact
+      ansible.builtin.set_fact:
+        free: "{{ free.stdout | split(' ') }}"
