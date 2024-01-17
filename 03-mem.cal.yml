@@ -48,4 +48,4 @@
     - name: memory red
       ansible.builtin.debug:
         msg: memory red
-      when: ansible_memory_mb["real"]["used"]/ ansible_memory_mb["real]["total"]*100 >70
+      when: ansible_memory_mb["real"]["used"]/ ansible_memory_mb["real"]["total"]*100 >70
