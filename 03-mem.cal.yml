@@ -1,33 +1,51 @@
 - name: print used memory
   hosts: localhost
   tasks:
-    - name: get memory
-      ansible.builtin.shell: free | grep Mem | xargs
-      register: free
+#    - name: get memory
+#      ansible.builtin.shell: free | grep Mem | xargs
+#      register: free
+#
+#    - name: set a fact
+#      ansible.builtin.set_fact:
+#        free: "{{ free.stdout | split(' ') }}"
+#
+#    - name: set facts
+#      ansible.builtin.set_fact:
+#        used_mem: "{{ 100-(free[3]|int / free[1]|int *100) }}"
+#
+#    - name: print free output
+#      ansible.builtin.debug:
+#        msg: "{{used_mem}}"
+#
+#    - name: memory good
+#      ansible.builtin.debug:
+#        msg: memory good
+#      when: used_mem|int <50
+#
+#    - name: memory orange
+#      ansible.builtin.debug:
+#        msg: memory orange
+#      when: used_mem|int >50 and used_mem|int <70
+#
+#    - name: memory red
+#      ansible.builtin.debug:
+#        msg: memory red
+#      when: used_mem|int >70
 
-    - name: set a fact
-      ansible.builtin.set_fact:
-        free: "{{ free.stdout | split(' ') }}"
-
-    - name: set facts
-      ansible.builtin.set_fact:
-        used_mem: "{{ 100-(free[3]|int / free[1]|int *100) }}"
-
-    - name: print free output
-      ansible.builtin.debug:
-        msg: "{{used_mem}}"
+# as above process is shell related. but in here we are in ansible we deal with ansible only.so ansible ahve command for that.
+# we do this with ansible set facts command.
 
     - name: memory good
       ansible.builtin.debug:
         msg: memory good
-      when: used_mem|int <50
+      when: ansible_memory_mb["real]["used"]/ ansible_memory_mb["real]["total"]*100<50
 
     - name: memory orange
       ansible.builtin.debug:
         msg: memory orange
-      when: used_mem|int >50 and used_mem|int <70
+      when: ansible_memory_mb["real]["used"]/ ansible_memory_mb["real]["total"]*100 >50 and ansible_memory_mb["real]["used"]/ ansible_memory_mb["real]["total"]*100<70
 
     - name: memory red
       ansible.builtin.debug:
         msg: memory red
-      when: used_mem|int >70
+      when: ansible_memory_mb["real]["used"]/ ansible_memory_mb["real]["total"]*100 >70
